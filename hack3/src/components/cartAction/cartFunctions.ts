@@ -1,9 +1,8 @@
 import { Product } from "../types/Products";
 
 export const addTOcart=(product :Product)=>{
-    const cart:Product[]=JSON.parse(localStorage.getItem('cart')||'[]')
-
-    const existingProductIndex = cart.findIndex(item => item._id === product._id)
+   const cart:Product[]=JSON.parse(localStorage.getItem('cart')||'[]')
+   const existingProductIndex = cart.findIndex(item => item._id === product._id)
 
     if(existingProductIndex > -1) {cart [existingProductIndex].stock += 1}
     else{cart.push({...product, stock:1})}
