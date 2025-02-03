@@ -2,39 +2,47 @@
 
 import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
-import  {client}  from '@/sanity/lib/client';
+import { client } from '@/sanity/lib/client';
 import { urlFor } from '@/sanity/lib/image';
 
+// Define TypeScript interface for the fetched data
+interface BannerData {
+  heading: string;
+  paragraph: string;
+  buttonText: string;
+  imageUrl: string;
+}
+
 // Fetch Function
-export const fetchMainCoverData = async () => {
+export const fetchMainCoverData = async (): Promise<BannerData[]> => {
   return await client.fetch(
     `*[_type == "banner"] {
-      _id,
       heading,
       paragraph,
       buttonText,
       "imageUrl": image.asset->url
     }`
   );
-const data = await fetchMainCoverData();
 };
 
 const Banner = () => {
-    const [data, setData] = useState<any>(null);
+  const [data, setData] = useState<BannerData | null>(null);
 
-    useEffect(() => {
-        const fetchData = async () => {
-            const result = await fetchMainCoverData();
-            setData(result[0]);
-        };
-        fetchData();
-    }, []);
+  useEffect(() => {
+    const fetchData = async () => {
+      const result = await fetchMainCoverData();
+      if (result.length > 0) {
+        setData(result[0]);
+      }
+    };
+    fetchData();
+  }, []);
 
-    if (!data) {
-        return <div>Loading...</div>;
-    }
+  if (!data) {
+    return <div>Loading...</div>;
+  }
 
-    const { heading, paragraph, buttonText, imageUrl } = data;
+  const { heading, paragraph, buttonText, imageUrl } = data;
 
   return (
     <div className="flex flex-col md:flex-row items-center justify-between bg-zinc-100 py-16 px-8 max-w-7xl mx-auto">
@@ -44,7 +52,7 @@ const Banner = () => {
         {paragraph && <p className="text-gray-700 text-lg md:text-xl mb-6">{paragraph}</p>}
         {buttonText && (
           <button className="bg-black text-white px-6 py-3 rounded-full hover:bg-blue-700">
-           <a href='/shop'>  {buttonText} </a>
+            <a href='/shop'>{buttonText}</a>
           </button>
         )}
       </div>
@@ -61,8 +69,7 @@ const Banner = () => {
           />
         </div>
       )}
-</div>
-
+    </div>
   );
 };
 
