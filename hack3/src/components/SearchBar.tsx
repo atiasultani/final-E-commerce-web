@@ -5,6 +5,7 @@ import Link from "next/link";
 import { client } from "@/sanity/lib/client";
 import { urlFor } from "@/sanity/lib/image";
 import { Product } from "@/components/types/Products";
+import Image from "next/image";
 
 const SearchBar = () => {
   const [query, setQuery] = useState("");
@@ -58,9 +59,11 @@ const SearchBar = () => {
             >
               {product.imageUrl && (
                 <div className="w-12 h-12 relative">
-                  <img
+                  <Image
                     src={urlFor(product.imageUrl).width(50).height(50).url()}
                     alt={product.name}
+                    width={50}
+                    height={50}
                     className="object-cover rounded"
                   />
                 </div>
