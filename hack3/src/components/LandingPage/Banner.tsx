@@ -16,22 +16,25 @@ export const fetchMainCoverData = async () => {
       "imageUrl": image.asset->url
     }`
   );
+const data = await fetchMainCoverData();
 };
 
 const Banner = () => {
-  const [data, setData] = useState(null);
-  const [loading, setLoading] = useState(true);
+    const [data, setData] = useState<any>(null);
 
-  useEffect(() => {
-    fetchMainCoverData()
-      .then((result) => setData(result[0])) // Assuming you want the first document
-      .finally(() => setLoading(false));
-  }, []);
+    useEffect(() => {
+        const fetchData = async () => {
+            const result = await fetchMainCoverData();
+            setData(result[0]);
+        };
+        fetchData();
+    }, []);
 
-  if (loading) return <div className="text-center py-16">Loading...</div>;
-  if (!data) return <div className="text-center py-16">No data available</div>;
+    if (!data) {
+        return <div>Loading...</div>;
+    }
 
-  const { heading, paragraph, buttonText, imageUrl } = data;
+    const { heading, paragraph, buttonText, imageUrl } = data;
 
   return (
     <div className="flex flex-col md:flex-row items-center justify-between bg-zinc-100 py-16 px-8 max-w-7xl mx-auto">
