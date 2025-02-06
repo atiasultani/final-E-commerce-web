@@ -16,8 +16,8 @@ const Header = () => {
   const toggleMobileMenu = () => setMobileMenuOpen(!isMobileMenuOpen);
 
   return (
-    <header className="bg-white shadow pt-16">
-      <div className="container mx-auto flex items-center justify-between px-4 py-3">
+    <header className="bg-white shadow py-4 ">
+      <div className="container mx-auto flex items-center justify-between px-4  ">
         {/* Logo & Main Navigation */}
         <div className="flex items-center space-x-6">
           <Link href="/">
@@ -47,7 +47,7 @@ const Header = () => {
         </div>
 
         {/* Right-side: Search, Cart, Profile & Mobile Menu */}
-        <div className="flex items-center space-x-4">
+        <div className="flex items-center space-x-4 ">
           {/* Search Bar */}
           <div className="hidden sm:block">
             <SearchBar />
@@ -71,12 +71,12 @@ const Header = () => {
               alt="Profile"
               width={24}
               height={24}
-              className="rounded-full hover:opacity-75 transition"
+              className="rounded-full hover:opacity-75 transition "
             />
           </Link>
 
           {/* Mobile Menu (Visible on small screens only) */}
-          <div className="md:hidden">
+          <div className="md:hidden mt-1.5">
             <Sheet>
               <SheetTrigger>
                 <Menu className="w-6 h-6" />
